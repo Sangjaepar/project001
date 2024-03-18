@@ -2,12 +2,16 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from django.utils import timezone
+from django.urls import reverse
 
 # Create your views here.
 
 def index(request):
     now = timezone.now()
     print('현재시간:', now)
+    print(reverse('exview:index'))
+    print(reverse('exview:get1'))
+    print(reverse('exview:get2', args=(11, 22, 'hello')))
     return render(request, 'ex_view/index.html', {'now': now})
 
 def get1(request):
@@ -111,5 +115,5 @@ class ExamGetPost(View):
             return HttpResponse('getpost2/(POST)')
         else:
             print('로그인 실패(다시 폼 전송)')
-            return HttpResponseRedirect('/ex_view/')        
+            return HttpResponseRedirect(reverse('exview:index'))        
         
